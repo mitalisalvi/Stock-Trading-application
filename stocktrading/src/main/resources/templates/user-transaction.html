@@ -1,0 +1,147 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <title>Transaction Summary</title>
+
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="alert alert-success">Congratulations, your transaction was successfully completed !</div>
+            <br>
+
+            <div id="bot">
+                <div id="table">
+                    <table class="table" style="border: 1px solid black">
+                        <caption th:text="${transactionBuyId}">Transaction ID:</caption>
+                        <thead>
+                            <tr style="background: lightcoral">
+                                <th>Stock Name</th>
+                                <th>Quantity</th>
+                                <th>Price per stock</th>
+                                <th>Price </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="trade: ${tradeBuyList}">
+                                <td th:text="${trade.stock.stockName}"></td>
+                                <td th:text="${trade.quantity}"></td>
+                                <td th:text="${trade.individualPrice}"></td>
+                                <td th:text="${trade.quantity * trade.individualPrice}"></td>
+                            </tr>
+
+                        </tbody>
+
+
+                        <tr >
+                            <td></td>
+                            <td></td>
+                            <td >
+                                Service Charge
+                            </td>
+                            <td th:text="${serviceBuyTax}">
+                            </td>
+                        </tr>
+
+                        <tr >
+                            <td></td>
+                            <td></td>
+                            <td >
+                                Total
+                            </td>
+                            <td th:text="${totalBuyPrice}">
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <br>
+
+
+                <div id="bot">
+                        <div id="table">
+                            <table class="table" style="border: 1px solid black">
+                                <caption th:text="${transactionSellId}">Transaction ID:</caption>
+                                <thead>
+                                    <tr style="background: lightgreen">
+                                        <th>Stock Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price per stock</th>
+                                        <th>Price </th>
+                                    </tr>
+                                </thead>
+        
+                                <tbody>
+                                    <tr th:each="trade: ${tradeSellList}">
+                                        <td th:text="${trade.stock.stockName}"></td>
+                                        <td th:text="${trade.quantity}"></td>
+                                        <td th:text="${trade.individualPrice}"></td>
+                                        <td th:text="${trade.quantity * trade.individualPrice}"></td>
+                                    </tr>
+        
+                                </tbody>
+        
+        
+                                <tr >
+                                    <td></td>
+                                    <td></td>
+                                    <td >
+                                        Service Charge
+                                    </td>
+                                    <td th:text="${serviceSellTax}">
+                                    </td>
+                                </tr>
+        
+                                <tr >
+                                    <td></td>
+                                    <td></td>
+                                    <td >
+                                        Total
+                                    </td>
+                                    <td th:text="${totalSellPrice}">
+                                    </td>
+                                </tr>
+        
+                            </table>
+                        </div>
+                <!--End Table-->
+                <p ><strong>Thank you for your business!</strong>
+                </p>
+
+
+
+
+
+
+            </div>
+        </div>
+</body>
+
+</html>

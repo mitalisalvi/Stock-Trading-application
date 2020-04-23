@@ -1,0 +1,85 @@
+<div th:fragment="header">
+
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Online Stock Trader</a>
+      </div>
+
+      <div th:if="${session.user == null}">
+        <ul class="nav navbar-nav">
+          <li class="active"><a th:href="@{/}">Home</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a th:href="@{/register.htm}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a th:href="@{/login.htm}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      </div>
+
+      <div th:unless="${session.user == null}">
+
+
+        <div th:if="${session.isAdmin != null && session.isAdmin == 'Yes'}">
+          <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li class="active"><a th:href="@{/admin/modify.htm}">Modify Service Charge</a></li>
+            <li class="active"><a th:href="@{/admin/verify.htm}">Verify Users</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon"></span>Hi Admin</a></li>
+              <li><a th:href="@{/logout.htm}"><span class="glyphicon glyphicon-log-in"></span> Signout</a></li>
+          </ul>
+        </div>
+
+        <div th:unless="${session.isAdmin != null && session.isAdmin == 'Yes'}">
+
+          <ul class="nav navbar-nav">
+            <li class="active"><a th:href="@{/}">Home</a></li>
+            <li class="active"><a th:href="@{/watchlist.htm}">Watchlist</a></li>
+            <li class="active"><a th:href="@{/dashboard.htm}">Portfolio</a></li>
+            <li class="active"><a th:href="@{/statement.htm}">Account Statement</a></li>
+
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Forecast<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{/forecast.htm}">Recommendations</a></li>
+                <li><a href="#" th:href="@{/analysis.htm}">Stock Analysis</a></li>
+              </ul>
+            </li>
+
+            
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <div th:if= "${session.verified == 'yes'}" class="btn-group btn-group-lg">
+                  <button type="button" class="btn btn-success">Verified</button>
+              </div>
+              <div th:if= "${session.verified == 'no'}" class="btn-group btn-group-lg">
+                  <button type="button" class="btn btn-danger">Unverified</button>
+              </div>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hi <span th:text="${session.user}"></span><span
+                  class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" th:href="@{/update/profile.htm}">Update Profile</a></li>
+                <li><a href="#" th:href="@{/update/bankAccount.htm}">Manage bank account</a></li>
+              </ul>
+            </li>
+            <li><a th:href="@{/logout.htm}"><span class="glyphicon glyphicon-log-in"></span> Signout</a></li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  </nav>
+
+</div>
+
+<br>

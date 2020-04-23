@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="User account registration" />
+    <link rel="icon" href="favicon.ico" />
+
+    <title>Registration Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+
+    <div class="middle-box text-center loginscreen animated fadeInDown gray-bg" style="padding: 30px;">
+        <div>
+
+            <h4>New User Registration</h4>
+
+            <div style="max-width: 600px;height: auto;border: 2px solid powderblue;padding: 20px;margin: 0 auto;">
+                <form autocomplete="off" action="#" th:action="@{/register.htm}" th:object="${user}" method="post"
+                    class="m-t" enctype="multipart/form-data">
+
+                    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                        <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control"
+                            required />
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                        <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control"
+                            required />
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                        </span>
+                        <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control"
+                            required />
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-eye-close"></span>
+                        </span>
+                        <input type="password" th:field="*{password}" placeholder="Password" class="form-control"
+                            required minlength="8" />
+                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

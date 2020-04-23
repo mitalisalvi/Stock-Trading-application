@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="User account registration" />
+    <link rel="icon" href="favicon.ico" />
+
+    <title>My Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+
+    <div class="middle-box text-center loginscreen animated fadeInDown gray-bg" style="padding: 30px;">
+
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="container bootstrap-iso container-fluid" style="max-width: 700px">
+                <div class="view-account">
+                    <section class="module">
+                        <div class="module-inner">
+                            <div class="content-panel">
+                                <h2 class="title">Update Service Charge</h2>
+                                <form class="form-horizontal"  autocomplete="off" action="#" th:action="@{/admin/modify.htm}" method="post">
+
+                                    <div th:if="${errorMessage}" class="alert alert-success" th:text="${errorMessage}"></div>
+                                    <fieldset class="fieldset">
+                                        <h3 class="fieldset-title">Update</h3>
+                    
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-3 col-xs-12 control-label">Service Charge</label>
+                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="number" required class="form-control" min="0.1" value="0" step="0.01" max ="99.95" pattern="^\d+(?:\.\d{1,2})?$" name="serviceCharge">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                   
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                            <input class="btn btn-primary" type="submit" value="Update Service Charges">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+       
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+
+</body>
+
+</html>

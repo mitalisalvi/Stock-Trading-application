@@ -1,0 +1,119 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <title>Stock Portfolio</title>
+
+    <script>
+        function inputChanged(event) {
+            event.target.parentElement.parentElement.className =
+                event.target.checked ? 'selected' : '';
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#checkBtn').click(function () {
+                if (document.getEelementById("sell").value) {
+                    checked = $("input[type=checkbox]:checked").length;
+
+                    if (!checked) {
+                        alert("You must check at least one checkbox.");
+                        return false;
+                    }
+
+                }
+
+            });
+        }
+        );
+
+    </script>
+
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>Stock Portfolio</h3>
+            <br>
+            <br>
+            <div th:if="${stockList.get('Sell').size() == 0}">
+                <div class="alert alert-danger">
+                    No stocks to sell !
+                </div>
+            </div>
+            <div th:unless="${stockList.get('Sell').size() == 0}">
+
+                <form autocomplete="off" name="form" action="#" id="form" th:action="@{/dashboard/sell.htm}"
+                    method="post" class="m-t" enctype="multipart/form-data">
+                    <table class="table">
+                        <caption>Sell existing shares</caption>
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Sell</th>
+                                <th>Stock Name</th>
+                                <th>Stock Symbol</th>
+                                <th>Current Price</th>
+                                <th>Change</th>
+                                <th>Market Type</th>
+                                <th>Selling Price</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stock,iterStat: ${stockList.get('Sell')}">
+                                <input type="hidden" id="sell" name="sell" th:value="${stockList.get('Sell').size()}">
+                                <td><input type="checkbox" onchange="inputChanged(event)" name="checkedRows"
+                                        th:value="${stock.stockSymbol + '!' + stockList.get('Amount').get(iterStat.index)}" />
+                                </td>
+                                <td th:text="${stock.stockName}"></td>
+                                <td th:text="${stock.stockSymbol}"></td>
+                                <td th:text="${stock.currentPrice}"></td>
+                                <td th:text="${stock.change}"></td>
+                                <td th:text="${stock.marketType}"></td>
+                                <td th:text="${stock.sellingPrice}"></td>
+                                <td th:text="${stockList.get('Amount').get(iterStat.index)}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+
+                    <button type="submit" class="btn btn-primary block full-width m-b" id="checkBtn">Sell</button>
+                </form>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>

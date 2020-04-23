@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <title>Watch List</title>
+    <script>
+        function inputChanged(event) {
+            event.target.parentElement.parentElement.className =
+                event.target.checked ? 'selected' : '';
+        }
+    </script>
+    <script >
+        $(document).ready(function () {
+            $('#checkBtn').click(function() {
+              checked = $("input[type=checkbox]:checked").length;
+        
+              if(!checked) {
+                alert("You must check at least one checkbox.");
+                return false;
+              }
+        
+            });
+        });
+        
+        </script>
+    <style>
+        .selected {
+            background-color: yellow;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>My Stock Watch List</h3>
+            <br>
+
+            <div th:if="${stockList.size() == 0}">
+                <div class="alert alert-danger">
+                    No items in watch list !
+                </div>
+            </div>
+            <div th:unless="${stockList.size() == 0}">
+
+                <form autocomplete="off" action="#" th:action="@{/trade/watchlist.htm}" method="post" class="m-t" enctype="multipart/form-data">
+                    <table class="table" style="border: 1px solid black" th:object="${stockList}">
+                        <thead>
+                            <tr>
+                                <th>Buy</th>
+                                <th>Stock Name</th>
+                                <th>Stock Symbol</th>
+                                <th>Current Price</th>
+                                <th>Change</th>
+                                <th>Market Type</th>
+                                <th>Buying Price</th>
+                                <th>Selling Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stock: ${stockList}">
+                                <td><input type="checkbox" onchange="inputChanged(event)" name="checkedRows" th:value="${stock.stockSymbol}"/></td>
+                                <td th:text="${stock.stockName}"></td>
+                                <td th:text="${stock.stockSymbol}"></td>
+                                <td th:text="${stock.currentPrice}"></td>
+                                <td th:text="${stock.change}"></td>
+                                <td th:text="${stock.marketType}"></td>
+                                <td th:text="${stock.buyingPrice}"></td>
+                                <td th:text="${stock.sellingPrice}"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <br>
+                    <button type="submit" class="btn btn-primary block full-width m-b" id="checkBtn">Buy</button>
+                </form>
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>

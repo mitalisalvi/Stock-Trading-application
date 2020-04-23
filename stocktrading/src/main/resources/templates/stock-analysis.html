@@ -1,0 +1,132 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+
+    <title>Stock Analysis</title>
+
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>Stock Analysis based on Portfolio</h3>
+            <br>
+
+            <div th:if="${analysisMap.get('Sell') == null}">
+              <div class="alert alert-danger" >Empty Portfolio ! Please start trading to get Portfolio Analysis</div>
+            </div>
+
+            <div th:unless="${analysisMap.get('Sell') == null}">
+
+            <div th:if="${analysisMap.get('Sell').size() != 0}">
+              <table class="table table-hover">
+                <caption>Sell these Stocks</caption>
+                    <thead>
+                      <tr>
+                        <th>Analysis</th>
+                        <th>Stock Name</th>
+                        <th>Percent Change</th>
+                        <th>Selling Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="stock: ${analysisMap.get('Sell')}">
+                        <td><img th:src="@{/sell.png}" alt="Sell" class="mr-3 mt-3 rounded-circle" style="width:60px;"></td>
+                        <td th:text="${stock.stockName}"></td>
+                        <td th:text="${stock.change}"></td>
+                        <td th:text="${stock.sellingPrice}"></td>
+                      </tr>
+                  
+                    
+                    </tbody>
+                </table>
+              </div>
+
+            <br><br>
+
+            <div th:if="${analysisMap.get('Buy').size() != 0}">
+            <table class="table table-hover">
+                <caption>Buy these Stocks</caption>
+                    <thead>
+                      <tr>
+                        <th>Analysis</th>
+                        <th>Stock Name</th>
+                        <th>Percent Change</th>
+                        <th>Buying Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="stock: ${analysisMap.get('Buy')}">
+                        <td><img th:src="@{/buy.png}" alt="Buy" class="mr-3 mt-3 rounded-circle" style="width:60px;"></td>
+                        <td th:text="${stock.stockName}"></td>
+                        <td th:text="${stock.change}"></td>
+                        <td th:text="${stock.buyingPrice}"></td>
+                      </tr>  
+                    </tbody>
+                  </table>
+                </div>
+
+                <br><br>
+
+                <div th:if="${analysisMap.get('Hold').size() != 0}">
+                <table class="table table-hover">
+                    <caption>Hold these Stocks</caption>
+                        <thead>
+                          <tr>
+                            <th>Analysis</th>
+                            <th>Stock Name</th>
+                            <th>Percent Change</th>
+                            <th>Selling Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="stock: ${analysisMap.get('Hold')}">
+                            <td><img th:src="@{/hold.png}" alt="Buy" class="mr-3 mt-3 rounded-circle" style="width:60px;"></td>
+                            <td th:text="${stock.stockName}"></td>
+                            <td th:text="${stock.change}"></td>
+                            <td th:text="${stock.sellingPrice}"></td>
+                          </tr>  
+                        </tbody>
+                      </table>
+                    </div>
+
+
+                  </div>
+
+          
+
+
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>

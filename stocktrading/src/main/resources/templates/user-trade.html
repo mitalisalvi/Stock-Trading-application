@@ -1,0 +1,275 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <title>Trade Stocks</title>
+
+    <script>
+        // function sayHello(event) {
+        //     $("#checkBtn").prop("disabled", true); //disable when ajax call starts
+        //     event.preventDefault();
+        //     var search = {}
+        //     $.ajax({
+        //         url: "/check/account.htm",
+        //         cache: false,
+        //         type: "POST",
+        //         data: JSON.stringify(search),
+        //         dataType: "json",
+        //         traditional: true,
+        //         contentType: "application/json; charset=utf-8",
+        //         success: function () {
+        //             $("#checkBtn").attr("disabled", false);
+        //             $("#checkBtn").prop("disabled", false);
+        //             // $("#checkBtn").removeAttr("disabled");
+        //             // $( "#checkBtn" ).removeProp( "disabled" );
+        //             // $('#r').submit();
+        //             $('#r').unbind().submit();
+
+        //         },
+        //         error: function () {
+        //             alert("Please add bank account before buying/selling stocks");
+        //             $("#checkBtn").attr("disabled", true);
+        //             $("#checkBtn").prop("disabled", true);
+        //         }
+        //     });
+        // }
+
+        $(document).ready(function () 
+        {
+            var allowSubmit = false;
+            $('form').submit(function (e) 
+            {
+                if (!allowSubmit)
+                {
+                    e.preventDefault();
+                    var search = {}
+                    $.ajax({
+                    url: "/check/account.htm",
+                    cache: false,
+                    type: "POST",
+                    data: JSON.stringify(search),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function () 
+                    {
+                        allowSubmit = true;
+                        $('form').submit();
+                    },
+                    error: function () 
+                    {
+                        alert("Please add bank account before buying/selling stocks");
+                        return false;
+                    }
+                });
+
+                }
+
+                
+            });
+            return false;
+        });
+
+
+    </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('.minus').click(function () {
+                var $input = $(this).parent().find('input');
+                var count = parseInt($input.val()) - 1;
+                count = count < 1 ? 1 : count;
+                $input.val(count);
+                $input.change();
+                return false;
+            });
+            $('.plus').click(function () {
+                var $input = $(this).parent().find('input');
+                $input.val(parseInt($input.val()) + 1);
+                $input.change();
+                return false;
+            });
+        });
+    </script>
+
+    <script>
+        function inputChanged(event) {
+            event.target.parentElement.parentElement.className =
+                event.target.checked ? 'selected' : '';
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#checkBtn').click(function () {
+                if (document.getEelementById("sell").value) {
+                    checked = $("input[type=checkbox]:checked").length;
+
+                    if (!checked) {
+                        alert("You must check at least one checkbox.");
+                        return false;
+                    }
+
+
+                }
+
+            });
+        }
+        );
+
+    </script>
+
+
+
+
+    <style>
+        span {
+            cursor: pointer;
+        }
+
+        .number {
+            margin: 10px;
+        }
+
+        .minus,
+        .plus,
+        .sell_minus,
+        .sell_plus {
+            width: 20px;
+            height: 34px;
+            background: #f2f2f2;
+            border-radius: 4px;
+            padding: 8px 5px 8px 5px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        input {
+            height: 34px;
+            width: 100px;
+            text-align: center;
+            font-size: 26px;
+            /* border: 1px solid #ddd; */
+            /* border-radius: 4px; */
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div th:replace="/navbar :: header"> </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>Stock Trading</h3>
+            <br>
+            <br>
+            <form autocomplete="off" name="form" action="#" id="form" th:action="@{/trade/transaction.htm}"
+                method="post" class="m-t" enctype="multipart/form-data">
+                <table class="table">
+                    <caption>Buy</caption>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Stock Name</th>
+                            <th>Stock Symbol</th>
+                            <th>Current Price</th>
+                            <th>Change</th>
+                            <th>Market Type</th>
+                            <th>Buying Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="stock: ${stockList.get('Buy')}">
+                            <td th:text="${stock.stockName}"></td>
+                            <td th:text="${stock.stockSymbol}"></td>
+                            <td th:text="${stock.currentPrice}"></td>
+                            <td th:text="${stock.change}"></td>
+                            <td th:text="${stock.marketType}"></td>
+                            <td th:text="${stock.buyingPrice}"></td>
+                            <td>
+                                <div class="number">
+                                    <span class="minus">-</span>
+                                    <input type="text" name="quantity" value="1" />
+                                    <span class="plus">+</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <br>
+
+                <table class="table">
+                    <caption>Sell existing shares</caption>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Sell</th>
+                            <th>Stock Name</th>
+                            <th>Stock Symbol</th>
+                            <th>Current Price</th>
+                            <th>Change</th>
+                            <th>Market Type</th>
+                            <th>Selling Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="stock,iterStat: ${stockList.get('Sell')}">
+                            <input type="hidden" id="sell" name="sell" th:value="${stockList.get('Sell').size()}">
+                            <td><input type="checkbox" onchange="inputChanged(event)" name="checkedRows"
+                                    th:value="${stock.stockSymbol + '!' + stockList.get('Amount').get(iterStat.index)}" />
+                            </td>
+                            <td th:text="${stock.stockName}"></td>
+                            <td th:text="${stock.stockSymbol}"></td>
+                            <td th:text="${stock.currentPrice}"></td>
+                            <td th:text="${stock.change}"></td>
+                            <td th:text="${stock.marketType}"></td>
+                            <td th:text="${stock.sellingPrice}"></td>
+                            <td th:text="${stockList.get('Amount').get(iterStat.index)}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <button type="submit" class="btn btn-primary block full-width m-b" id="checkBtn">Trade</button>
+            </form>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>
